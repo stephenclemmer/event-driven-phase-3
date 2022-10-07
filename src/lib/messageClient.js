@@ -2,16 +2,16 @@
 
 const { io } = require('socket.io-client');
 
-const socket = io('http://localhost:3002/caps');
+const socket_URL = 'http://localhost:3002/caps';
 
 class MessageClient {
-  // queueId is going to be whatever business is fed to it
+ 
   constructor (queueId){
     this.queueId = queueId;
-    this.socket = io(socket);
-    this.socket.emit('JOIN', queueId);
+    this.socket = io(socket_URL);
+    this.socket.emit('JOIN', (queueId));
     this.socket.on('JOIN', (id) => {
-      console.log('Joined Client Queue', id);
+      console.log('Joined Client Room', id);
     });
   }
 
@@ -20,6 +20,7 @@ class MessageClient {
   }
 
   subscribe(event, callback){
+    console.log('Subscribe messageClient.js');
     this.socket.on(event, callback);
   }
 }
